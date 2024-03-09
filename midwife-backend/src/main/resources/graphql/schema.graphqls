@@ -3,6 +3,13 @@ type Query {
     getMidwife(id: ID!): Midwife
 }
 
+type Mutation {
+    createMidwife(
+        firstName: String!,
+        lastName: String!
+    ): Midwife!
+}
+
 type Midwife {
     id: ID!
     firstName: String!
