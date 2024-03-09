@@ -10,7 +10,7 @@ class FindAllMidwifesUseCase(
 ) {
 
     fun findAll(): List<Midwife> {
-        return repository.listAll();
+        return repository.listAll()
     }
 
 }
