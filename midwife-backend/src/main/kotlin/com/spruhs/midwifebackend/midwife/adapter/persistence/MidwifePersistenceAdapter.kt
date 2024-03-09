@@ -2,7 +2,10 @@ package com.spruhs.midwifebackend.midwife.adapter.persistence
 
 import com.spruhs.midwifebackend.midwife.application.ports.MidwifeRepository
 import com.spruhs.midwifebackend.midwife.domain.Midwife
+import org.springframework.stereotype.Component
+import java.util.UUID
 
+@Component
 class MidwifePersistenceAdapter(
     private val repository: Neo4jMidwifeRepository,
     private val mapper: MidwifeMapper
@@ -13,8 +16,8 @@ class MidwifePersistenceAdapter(
         )
     }
 
-    override fun listById(id: String): Midwife? {
-        return repository.findById(id)
+    override fun findById(id: UUID): Midwife? {
+        return repository.findById(id.toString())
             .map { mapper.toDomain(it) }
             .orElse(null)
     }

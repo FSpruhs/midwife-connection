@@ -1,8 +1,10 @@
 package com.spruhs.midwifebackend.midwife.adapter.graphql
 
-import com.spruhs.midwifebackend.midwife.adapter.persistence.MidwifeNode
-import com.spruhs.midwifebackend.midwife.adapter.persistence.Neo4jMidwifeRepository
-import org.springframework.beans.factory.annotation.Autowired
+import com.spruhs.midwifebackend.midwife.application.RegisterMidwifeCommand
+import com.spruhs.midwifebackend.midwife.application.FindAllMidwifesUseCase
+import com.spruhs.midwifebackend.midwife.application.FindMidwifeByIdUseCase
+import com.spruhs.midwifebackend.midwife.application.RegisterMidwifeUseCase
+import com.spruhs.midwifebackend.midwife.domain.Midwife
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -10,21 +12,20 @@ import org.springframework.stereotype.Controller
 import java.util.UUID
 
 @Controller
-class MidwifeResolver(@Autowired val neo4jMidwifeRepository: Neo4jMidwifeRepository) {
+class MidwifeResolver(
+    val findMidwifeByIdUseCase: FindMidwifeByIdUseCase,
+    val findAllMidwifesUseCase: FindAllMidwifesUseCase,
+    val registerMidwifeUseCase: RegisterMidwifeUseCase
+) {
 
     @QueryMapping
     fun getMidwifes(): List<MidwifeDto> {
-        return listOf(
-            MidwifeDto(
-                id = UUID.randomUUID(),
-                firstName = "Rose",
-                lastName = "Gneist"
-            )
-        )
+        return findAllMidwifesUseCase.findAll().map(::toDto)
     }
 
     @QueryMapping
     fun getMidwife(@Argument id: UUID): MidwifeDto {
+        findMidwifeByIdUseCase.find(id)
         return MidwifeDto(
             id = UUID.randomUUID(),
             firstName = "Rose",
@@ -34,19 +35,20 @@ class MidwifeResolver(@Autowired val neo4jMidwifeRepository: Neo4jMidwifeReposit
 
     @MutationMapping
     fun createMidwife(@Argument firstName: String, @Argument lastName: String): MidwifeDto {
-        neo4jMidwifeRepository.save(
-            MidwifeNode(
-                id = UUID.randomUUID().toString(),
+        return registerMidwifeUseCase
+            .register(RegisterMidwifeCommand(
                 firstName = firstName,
                 lastName = lastName
-            )
-        )
-        return MidwifeDto(
-            id = UUID.randomUUID(),
-            firstName = firstName,
-            lastName = lastName
-        )
+            )).let(::toDto)
     }
+}
+
+private fun toDto(midwife: Midwife): MidwifeDto {
+    return MidwifeDto(
+        id = midwife.id,
+        firstName = midwife.firstName,
+        lastName = midwife.lastName
+    )
 }
 
 data class MidwifeDto(
