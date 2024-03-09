@@ -1,0 +1,10 @@
+type Query {
+    getMidwifes: [Midwife]!
+    getMidwife(id: ID!): Midwife
+}
+
+type Midwife {
+    id: ID!
+    firstName: String!
+    lastName: String!
+}
