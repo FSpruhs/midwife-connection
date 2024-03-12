@@ -17,21 +17,21 @@ class AreaInizializer(
         if (repository.findAll().isEmpty()) fillWithDefaultAreas()
     }
 
-    fun fillWithDefaultAreas() {
+    private fun fillWithDefaultAreas() {
         catalog.addAllAreas(createDefaultAreas())
     }
 
-    fun createDefaultAreas(): Set<Area> {
+    private fun createDefaultAreas(): Set<Area> {
         return setOf(
-            Area(Postcode(1000), "Brussels"),
-            Area(Postcode(2000), "Antwerp"),
-            Area(Postcode(3000), "Leuven"),
-            Area(Postcode(4000), "Liège"),
-            Area(Postcode(5000), "Namur"),
-            Area(Postcode(6000), "Charleroi"),
-            Area(Postcode(7000), "Mons"),
-            Area(Postcode(8000), "Bruges"),
-            Area(Postcode(9000), "Ghent")
+            Area(Postcode(1000), "Innenstadt", "Brussels"),
+            Area(Postcode(2000), "Innenstadt", "Antwerp"),
+            Area(Postcode(3000), "Innenstadt", "Leuven"),
+            Area(Postcode(4000), "Innenstadt", "Liège"),
+            Area(Postcode(5000), "Innenstadt", "Namur"),
+            Area(Postcode(6000), "Innenstadt", "Charleroi"),
+            Area(Postcode(7000), "Innenstadt", "Mons"),
+            Area(Postcode(8000), "Innenstadt", "Bruges"),
+            Area(Postcode(9000), "Innenstadt", "Ghent")
         )
     }
 }

@@ -6,16 +6,19 @@ import com.spruhs.midwifebackend.area.domain.Postcode
 import org.springframework.stereotype.Component
 
 @Component
-class AreaPersistenceAdapter : AreaRepository {
+class AreaPersistenceAdapter(
+    val repository: Neo4jAreaRepository,
+    val mapper: AreaMapper
+) : AreaRepository {
     override fun saveAll(areas: Set<Area>) {
-        TODO("Not yet implemented")
+        repository.saveAll(areas.map { mapper.fromDomain(it) })
     }
 
     override fun findAll(): Set<Area> {
-        TODO("Not yet implemented")
+        return repository.findAll().map { mapper.fromNode(it) }.toSet()
     }
 
     override fun findByPostcode(postcode: Postcode): Area? {
-        TODO("Not yet implemented")
+        return repository.findByPostcode(postcode.value)?.let { mapper.fromNode(it) }
     }
 }

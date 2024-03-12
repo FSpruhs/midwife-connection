@@ -33,7 +33,7 @@ class AreaCatalogTest {
     @Test
     fun findAreaByPostcode_shouldFindInList() {
         // Given
-        val area = Area(Postcode(50674), "Köln")
+        val area = Area(Postcode(50674), "Innenstadt", "Köln")
         catalog.addArea(area)
 
         // When
@@ -46,7 +46,7 @@ class AreaCatalogTest {
     @Test
     fun findAreaByPostcode_shouldFindInRepository() {
         // Given
-        val area = Area(Postcode(50674), "Köln")
+        val area = Area(Postcode(50674), "Innenstadt", "Köln")
         every { repository.findByPostcode(Postcode(50674)) } returns area
 
         // When
@@ -71,7 +71,7 @@ class AreaCatalogTest {
     @Test
     fun addArea_shouldAddArea() {
         // Given
-        val area = Area(Postcode(50674), "Köln")
+        val area = Area(Postcode(50674), "Innenstadt", "Köln")
 
         // When
         catalog.addArea(area)
@@ -83,7 +83,7 @@ class AreaCatalogTest {
     @Test
     fun addArea_shouldThrowException_whenAreaAlreadyExists() {
         // Given
-        val area = Area(Postcode(50674), "Köln")
+        val area = Area(Postcode(50674), "Innenstadt", "Köln")
         catalog.addArea(area)
 
         // When
@@ -97,8 +97,8 @@ class AreaCatalogTest {
     fun addAllAreas_shouldAddAllAreas() {
         // Given
         val areas = setOf(
-            Area(Postcode(50674), "Köln"),
-            Area(Postcode(50676), "Köln")
+            Area(Postcode(50674), "Innenstadt", "Köln"),
+            Area(Postcode(50676), "Innenstadt", "Köln")
         )
         every { repository.saveAll(any()) } just Runs
 
