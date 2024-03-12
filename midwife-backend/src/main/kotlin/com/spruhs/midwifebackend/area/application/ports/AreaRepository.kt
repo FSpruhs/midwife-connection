@@ -9,5 +9,6 @@ interface AreaRepository {
     fun save(area: Area): Area
     fun findAll(): Set<Area>
     fun findByPostcode(postcode: Postcode): Area?
+    fun delete(postcode: Postcode): Boolean
 
 }

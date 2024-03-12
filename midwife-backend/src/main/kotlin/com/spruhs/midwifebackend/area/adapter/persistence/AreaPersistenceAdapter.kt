@@ -25,4 +25,9 @@ class AreaPersistenceAdapter(
     override fun findByPostcode(postcode: Postcode): Area? {
         return repository.findByPostcode(postcode.value)?.let { mapper.fromNode(it) }
     }
+
+    override fun delete(postcode: Postcode): Boolean {
+        repository.deleteById(postcode.value)
+        return true
+    }
 }

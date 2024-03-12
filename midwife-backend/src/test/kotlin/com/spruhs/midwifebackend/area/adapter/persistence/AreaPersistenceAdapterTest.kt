@@ -8,18 +8,16 @@ import org.neo4j.harness.Neo4j
 import org.neo4j.harness.Neo4jBuilders
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.neo4j.core.Neo4jClient
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 
 
 @DataNeo4jTest
-//@SpringBootTest(classes = [AreaPersistenceAdapter::class])
 class AreaPersistenceAdapterTest {
 
-    //@Autowired
-    //private lateinit var areaPersistenceAdapter: AreaPersistenceAdapter
+    @Autowired
+    lateinit var areaPersistenceAdapter: AreaPersistenceAdapter
 
     companion object {
         private lateinit var neo4jContainer: Neo4j
@@ -55,11 +53,10 @@ class AreaPersistenceAdapterTest {
         assertThat(result).hasValue(0L)
     }
 
-    //@Test
-    //fun `should return all areas`() {
-    //    val areas = areaPersistenceAdapter.findAll()
-    //    assertThat(areas).isEmpty()
-    //}
-
+    @Test
+    fun `should return all areas`(@Autowired client: Neo4jClient) {
+        val areas = areaPersistenceAdapter.findAll()
+        assertThat(areas).isEmpty()
+    }
 
 }

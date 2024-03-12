@@ -14,7 +14,7 @@ class AreaInizializer(
     val catalog: AreaCatalog
 ) : ApplicationRunner{
     override fun run(args: ApplicationArguments?) {
-        if (repository.findAll().isEmpty()) fillWithDefaultAreas()
+        if (repository.findAll().isEmpty()) fillWithDefaultAreas() else catalog.loadAreas()
     }
 
     private fun fillWithDefaultAreas() {
@@ -23,15 +23,15 @@ class AreaInizializer(
 
     private fun createDefaultAreas(): Set<Area> {
         return setOf(
-            Area(Postcode(1000), "Innenstadt", "Brussels"),
-            Area(Postcode(2000), "Innenstadt", "Antwerp"),
-            Area(Postcode(3000), "Innenstadt", "Leuven"),
-            Area(Postcode(4000), "Innenstadt", "Liège"),
-            Area(Postcode(5000), "Innenstadt", "Namur"),
-            Area(Postcode(6000), "Innenstadt", "Charleroi"),
-            Area(Postcode(7000), "Innenstadt", "Mons"),
-            Area(Postcode(8000), "Innenstadt", "Bruges"),
-            Area(Postcode(9000), "Innenstadt", "Ghent")
+            Area(Postcode(50667), "Innenstadt", "Köln"),
+            Area(Postcode(50823), "Ehrenfeld", "Köln"),
+            Area(Postcode(51103), "Deutz", "Köln"),
+            Area(Postcode(50668), "Neustadt-Nord", "Köln"),
+            Area(Postcode(50678), "Altstadt-Süd", "Köln"),
+            Area(Postcode(50825), "Nippes", "Köln"),
+            Area(Postcode(51109), "Porz", "Köln"),
+            Area(Postcode(50968), "Sülz", "Köln"),
+            Area(Postcode(50674), "Rodenkirchen", "Köln"),
         )
     }
 }

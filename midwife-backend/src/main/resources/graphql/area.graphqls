@@ -8,6 +8,14 @@ extend type Mutation {
         district: String!,
         city: String!
     ): Area!
+    updateArea(
+        postcode: Int!,
+        district: String!,
+        city: String!
+    ): Area!
+    deleteArea(
+        postcode: Int!
+    ): Boolean
 }
 
 type Area {

@@ -2,14 +2,12 @@ package com.spruhs.midwifebackend.area.application
 
 import com.spruhs.midwifebackend.area.application.ports.AreaRepository
 import com.spruhs.midwifebackend.area.domain.Area
+import com.spruhs.midwifebackend.area.domain.AreaNotFoundException
 import com.spruhs.midwifebackend.area.domain.Postcode
-import io.mockk.Runs
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.just
-import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -34,6 +32,7 @@ class AreaCatalogTest {
     fun findAreaByPostcode_shouldFindInList() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
+        every { repository.save(any()) } returns  area
         catalog.addArea(area)
 
         // When
@@ -64,7 +63,7 @@ class AreaCatalogTest {
         // When
         assertThatThrownBy { catalog.findArea(Postcode(50674)) }
             // Then
-            .isInstanceOf(IllegalArgumentException::class.java)
+            .isInstanceOf(AreaNotFoundException::class.java)
             .hasMessage("Area with postcode 50674 not found.")
     }
 
@@ -72,18 +71,21 @@ class AreaCatalogTest {
     fun addArea_shouldAddArea() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
+        every { repository.save(any()) } returns  area
 
         // When
         catalog.addArea(area)
 
         // Then
         assertThat(catalog.findArea(Postcode(50674))).isEqualTo(area)
+        verify { repository.save(area) }
     }
 
     @Test
     fun addArea_shouldThrowException_whenAreaAlreadyExists() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
+        every { repository.save(any()) } returns  area
         catalog.addArea(area)
 
         // When

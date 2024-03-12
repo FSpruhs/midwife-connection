@@ -30,6 +30,29 @@ class AreaResolver(val areaCatalog: AreaCatalog) {
         ).let(::toDto)
     }
 
+    @MutationMapping
+    fun deleteArea(
+        @Argument postcode: Int
+    ): Boolean {
+        return areaCatalog.deleteArea(
+            Postcode(postcode)
+        )
+    }
+
+    @MutationMapping
+    fun updateArea(
+        @Argument postcode: Int,
+        @Argument district: String,
+        @Argument city: String
+    ): AreaDto {
+        return areaCatalog.updateArea(
+            Area(
+                postcode = Postcode(postcode),
+                district = district,
+                city = city)
+        ).let(::toDto)
+    }
+
 }
 
 private fun toDto(area: Area): AreaDto {
