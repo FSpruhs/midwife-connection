@@ -1,9 +1,9 @@
-type Query {
+extend type Query {
     getMidwifes: [Midwife]!
     getMidwife(id: ID!): Midwife
 }
 
-type Mutation {
+extend type Mutation {
     createMidwife(
         firstName: String!,
         lastName: String!

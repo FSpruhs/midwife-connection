@@ -11,9 +11,10 @@ class AreaCatalog(
 ) {
     private val areas = mutableSetOf<Area>()
 
-    fun addArea(area: Area) {
+    fun addArea(area: Area): Area {
         require(areas.contains(area).not()) { "Area with postcode ${area.postcode.value} already exists." }
         areas.add(area)
+        return repository.save(area)
     }
 
     fun addAllAreas(areas: Set<Area>) {
@@ -29,6 +30,10 @@ class AreaCatalog(
 
     fun clearAreas() {
         areas.clear()
+    }
+
+    fun getAreas(): Set<Area> {
+        return areas
     }
 
 }

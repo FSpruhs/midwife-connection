@@ -25,12 +25,7 @@ class MidwifeResolver(
 
     @QueryMapping
     fun getMidwife(@Argument id: UUID): MidwifeDto {
-        findMidwifeByIdUseCase.find(id)
-        return MidwifeDto(
-            id = UUID.randomUUID(),
-            firstName = "Rose",
-            lastName = "Gneist"
-        )
+        return findMidwifeByIdUseCase.find(id).let(::toDto)
     }
 
     @MutationMapping

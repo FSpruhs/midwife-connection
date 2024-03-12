@@ -15,7 +15,11 @@ import org.springframework.test.context.DynamicPropertySource
 
 
 @DataNeo4jTest
+//@SpringBootTest(classes = [AreaPersistenceAdapter::class])
 class AreaPersistenceAdapterTest {
+
+    //@Autowired
+    //private lateinit var areaPersistenceAdapter: AreaPersistenceAdapter
 
     companion object {
         private lateinit var neo4jContainer: Neo4j
@@ -50,6 +54,12 @@ class AreaPersistenceAdapterTest {
             .one()
         assertThat(result).hasValue(0L)
     }
+
+    //@Test
+    //fun `should return all areas`() {
+    //    val areas = areaPersistenceAdapter.findAll()
+    //    assertThat(areas).isEmpty()
+    //}
 
 
 }

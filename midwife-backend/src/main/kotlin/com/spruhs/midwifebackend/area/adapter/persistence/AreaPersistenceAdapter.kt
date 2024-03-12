@@ -14,6 +14,10 @@ class AreaPersistenceAdapter(
         repository.saveAll(areas.map { mapper.fromDomain(it) })
     }
 
+    override fun save(area: Area): Area {
+        repository.save(mapper.fromDomain(area)).let { return mapper.fromNode(it) }
+    }
+
     override fun findAll(): Set<Area> {
         return repository.findAll().map { mapper.fromNode(it) }.toSet()
     }

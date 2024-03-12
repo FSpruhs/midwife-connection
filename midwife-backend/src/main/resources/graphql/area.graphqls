@@ -1,0 +1,17 @@
+extend type Query {
+    getAreas: [Area]!
+}
+
+extend type Mutation {
+    createArea(
+        postcode: Int!,
+        district: String!,
+        city: String!
+    ): Area!
+}
+
+type Area {
+    postcode: Int!
+    district: String!
+    city: String!
+}

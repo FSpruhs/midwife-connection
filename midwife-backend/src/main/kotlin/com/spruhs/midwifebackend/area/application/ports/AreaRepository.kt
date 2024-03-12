@@ -6,6 +6,7 @@ import com.spruhs.midwifebackend.area.domain.Postcode
 interface AreaRepository {
 
     fun saveAll(areas: Set<Area>)
+    fun save(area: Area): Area
     fun findAll(): Set<Area>
     fun findByPostcode(postcode: Postcode): Area?
 
