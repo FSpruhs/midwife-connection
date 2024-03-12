@@ -9,30 +9,26 @@ import org.springframework.stereotype.Component
 class AreaCatalog(
     val repository: AreaRepository
 ) {
-    val areas = mutableSetOf<Area>()
+    private val areas = mutableSetOf<Area>()
 
     fun addArea(area: Area) {
-        require(areas.contains(area).not()) { "Area with postcode ${area.postcode.value} already exists" }
+        require(areas.contains(area).not()) { "Area with postcode ${area.postcode.value} already exists." }
         areas.add(area)
     }
 
-    fun findAreaByPostcode(postcode: Postcode): Area {
+    fun addAllAreas(areas: Set<Area>) {
+        this.areas.addAll(areas)
+        repository.saveAll(areas)
+    }
+
+    fun findArea(postcode: Postcode): Area {
         return areas.find { it.postcode == postcode }
             ?: repository.findByPostcode(postcode)?.also { areas.plus(it) }
-            ?: throw IllegalArgumentException("Area with postcode $postcode not found")
-    }
-
-    fun findAreaByName(name: String): Area? {
-        return areas.find { it.name == name }
-    }
-
-    fun saveAreas() {
-        repository.saveAll(areas);
+            ?: throw IllegalArgumentException("Area with postcode ${postcode.value} not found.")
     }
 
     fun clearAreas() {
         areas.clear()
     }
-
 
 }
