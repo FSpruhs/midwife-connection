@@ -4,6 +4,6 @@ import org.springframework.data.neo4j.repository.Neo4jRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface Neo4jAreaRepository : Neo4jRepository<AreaNode, String> {
+interface Neo4jAreaRepository : Neo4jRepository<AreaNode, Int> {
     fun findByPostcode(postcode: Int): AreaNode?
 }
