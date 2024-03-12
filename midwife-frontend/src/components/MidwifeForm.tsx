@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Label, TextInput } from 'flowbite-react';
 import { gql, useMutation } from '@apollo/client';
+import {Button, TextField } from "@mui/material";
 
 
 
@@ -35,18 +35,11 @@ const MidwifeForm: React.FC = () => {
   return (
     <>
       <form
-        className="flex max-w-md flex-col gap-4"
         onSubmit={handleSubmit}
       >
-        <div>
-          <Label>Vorname</Label>
-          <TextInput type="text" value={firstName} onChange={handleInputFirstName} />
-        </div>
-        <div>
-          <Label>Nachname</Label>
-          <TextInput type="text" value={lastName} onChange={handleInputLastName} />
-        </div>
-        <Button type="submit">Anlegen</Button>
+          <TextField label="Vorname" value={firstName} onChange={handleInputFirstName} />
+          <TextField label="Nachname" type="text" value={lastName} onChange={handleInputLastName} />
+          <Button type="submit">Anlegen</Button>
       </form>
     </>
   );
