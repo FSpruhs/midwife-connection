@@ -1,7 +1,5 @@
-import AreaForm from "../components/AreaForm.tsx";
+import AreaForm from '../components/AreaForm.tsx';
 
 export default function Area() {
-    return (
-        <AreaForm />
-    );
+  return <AreaForm />;
 }
