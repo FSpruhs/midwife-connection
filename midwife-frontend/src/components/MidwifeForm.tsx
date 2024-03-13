@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import {Button, TextField } from "@mui/material";
+import {Box, Button, TextField} from "@mui/material";
 
 
 
@@ -33,15 +33,19 @@ const MidwifeForm: React.FC = () => {
   };
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
+      <Box
+          component="form"
+          sx={{
+              '& .MuiTextField-root': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
       >
-          <TextField label="Vorname" value={firstName} onChange={handleInputFirstName} />
-          <TextField label="Nachname" type="text" value={lastName} onChange={handleInputLastName} />
+          <TextField label="Vorname" value={firstName} onChange={handleInputFirstName}/>
+          <TextField label="Nachname" type="text" value={lastName} onChange={handleInputLastName}/>
           <Button type="submit">Anlegen</Button>
-      </form>
-    </>
+    </Box>
   );
 };
 
