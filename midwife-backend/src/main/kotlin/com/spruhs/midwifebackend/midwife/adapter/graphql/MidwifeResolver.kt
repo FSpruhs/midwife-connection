@@ -1,5 +1,6 @@
 package com.spruhs.midwifebackend.midwife.adapter.graphql
 
+import com.spruhs.midwifebackend.area.domain.Postcode
 import com.spruhs.midwifebackend.midwife.application.RegisterMidwifeCommand
 import com.spruhs.midwifebackend.midwife.application.FindAllMidwifesUseCase
 import com.spruhs.midwifebackend.midwife.application.FindMidwifeByIdUseCase
@@ -29,11 +30,16 @@ class MidwifeResolver(
     }
 
     @MutationMapping
-    fun createMidwife(@Argument firstName: String, @Argument lastName: String): MidwifeDto {
+    fun createMidwife(
+        @Argument firstName: String,
+        @Argument lastName: String,
+        @Argument areas: Set<Int>
+    ): MidwifeDto {
         return registerMidwifeUseCase
             .register(RegisterMidwifeCommand(
                 firstName = firstName,
-                lastName = lastName
+                lastName = lastName,
+                areas = areas.map { Postcode(it) }.toSet()
             )).let(::toDto)
     }
 }
@@ -42,12 +48,14 @@ private fun toDto(midwife: Midwife): MidwifeDto {
     return MidwifeDto(
         id = midwife.id,
         firstName = midwife.firstName,
-        lastName = midwife.lastName
+        lastName = midwife.lastName,
+        areas = midwife.areas.map { it.value }.toSet()
     )
 }
 
 data class MidwifeDto(
     val id: UUID,
     val firstName: String,
-    val lastName: String
+    val lastName: String,
+    val areas: Set<Int>
 )

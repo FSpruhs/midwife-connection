@@ -6,7 +6,8 @@ extend type Query {
 extend type Mutation {
     createMidwife(
         firstName: String!,
-        lastName: String!
+        lastName: String!,
+        areas: [Int]!
     ): Midwife!
 }
 
@@ -14,4 +15,5 @@ type Midwife {
     id: ID!
     firstName: String!
     lastName: String!
+    areas: [Int]!
 }

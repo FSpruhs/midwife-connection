@@ -8,5 +8,5 @@ data class AreaNode(
   @Id
   val postcode: Int,
   val district: String,
-  val city: String
+  val city: String,
 )
