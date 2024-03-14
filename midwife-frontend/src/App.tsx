@@ -7,6 +7,7 @@ import Area from './pages/Area.tsx';
 import Brokerage from './pages/Brokerage.tsx';
 import Women from './pages/Women.tsx';
 import Service from './pages/Service.tsx';
+import EditArea from "./components/EditArea.tsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/brokerage" element={<Brokerage />} />
         <Route path="/women" element={<Women />} />
         <Route path="/service" element={<Service />} />
+        <Route path="/area/:postcode/:city/:district" element={<EditArea />} />
       </Routes>
     </>
   );

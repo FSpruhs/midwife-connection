@@ -11,20 +11,13 @@ import {
   TextField,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
-interface AreaListData {
-  getAreas: Area[];
-}
-
-interface Area {
-  postcode: number;
-  city: string;
-  district: string;
-}
+import {CREATE_AREA, DELETE_AREA, GET_AREAS} from "../queries/area.ts";
+import {Area, AreaListGraphQlData} from "../models/area.ts";
+import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
   city: string;
@@ -33,28 +26,11 @@ type Inputs = {
 };
 
 export default function AreaForm() {
-  const CREATE_AREA = gql`
-    mutation CreateArea($city: String!, $district: String!, $postcode: Int!) {
-      createArea(city: $city, district: $district, postcode: $postcode) {
-        postcode
-        city
-        district
-      }
-    }
-  `;
 
-  const GET_AREAS = gql`
-    query GetAreas {
-      getAreas {
-        postcode
-        city
-        district
-      }
-    }
-  `;
-
-  const { data, refetch } = useQuery<AreaListData>(GET_AREAS);
+  const { data, refetch } = useQuery<AreaListGraphQlData>(GET_AREAS);
   const [createArea] = useMutation(CREATE_AREA);
+  const [deleteArea] = useMutation(DELETE_AREA);
+  const navigate = useNavigate();
 
   const {
     reset,
@@ -62,6 +38,18 @@ export default function AreaForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const handleDelete = (area: Area) => {
+      deleteArea({
+            variables: {
+                postcode: area.postcode
+            },
+      }).then(() => refetch());
+  };
+
+  const handleEdit = (area: Area) => {
+      navigate(`/area/${area.postcode}/${area.city}/${area.district}`);
+  }
 
   const onSubmit = (data: Inputs) => {
     createArea({
@@ -102,10 +90,10 @@ export default function AreaForm() {
                   <TableCell align="left">{area.district}</TableCell>
                   <TableCell align="left">{area.city}</TableCell>
                   <TableCell align="center">
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="edit" onClick={() => handleEdit(area)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" onClick={() => handleDelete(area)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -145,7 +133,7 @@ export default function AreaForm() {
             helperText={errors.postcode ? 'Fünfstellige Postleitzahl erforderlich' : ''}
           />
         </Stack>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Anlegen</Button>
       </form>
     </>
   );

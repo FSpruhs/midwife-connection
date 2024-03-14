@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Box, Button, TextField } from '@mui/material';
+import { CREATE_MIDWIFE } from '../queries/midwife';
 
 const MidwifeForm: React.FC = () => {
-  const CREATE_MIDWIFE = gql`
-    mutation CreateMidwife($firstName: String!, $lastName: String!) {
-      createMidwife(firstName: $firstName, lastName: $lastName) {
-        id
-        firstName
-        lastName
-      }
-    }
-  `;
 
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
