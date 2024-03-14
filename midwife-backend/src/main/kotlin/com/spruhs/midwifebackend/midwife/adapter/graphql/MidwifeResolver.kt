@@ -33,7 +33,7 @@ class MidwifeResolver(
     fun createMidwife(
         @Argument firstName: String,
         @Argument lastName: String,
-        @Argument areas: Set<Int>
+        @Argument areas: List<Int>
     ): MidwifeDto {
         return registerMidwifeUseCase
             .register(RegisterMidwifeCommand(

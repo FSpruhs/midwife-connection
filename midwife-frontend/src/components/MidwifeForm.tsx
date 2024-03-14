@@ -18,7 +18,13 @@ const MidwifeForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createMidwife({ variables: { firstName: firstName, lastName: lastName } });
+    createMidwife({
+      variables: {
+        firstName: firstName,
+        lastName: lastName,
+        areas: []
+       }
+    }).then((data) => console.log(data));
   };
 
   return (

@@ -7,7 +7,7 @@ extend type Mutation {
     createMidwife(
         firstName: String!,
         lastName: String!,
-        areas: [Int]!
+        areas: [Int!]!
     ): Midwife!
 }
 
