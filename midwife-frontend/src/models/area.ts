@@ -1,9 +1,9 @@
 export interface AreaListGraphQlData {
-    getAreas: Area[];
+  getAreas: Area[];
 }
 
 export interface Area {
-    postcode: number;
-    city: string;
-    district: string;
+  postcode: number;
+  city: string;
+  district: string;
 }

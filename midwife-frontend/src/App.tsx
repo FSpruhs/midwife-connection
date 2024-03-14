@@ -7,7 +7,7 @@ import Area from './pages/Area.tsx';
 import Brokerage from './pages/Brokerage.tsx';
 import Women from './pages/Women.tsx';
 import Service from './pages/Service.tsx';
-import EditArea from "./components/EditArea.tsx";
+import EditArea from './components/EditArea.tsx';
 
 function App() {
   return (

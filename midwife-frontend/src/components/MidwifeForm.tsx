@@ -4,7 +4,6 @@ import { Box, Button, TextField } from '@mui/material';
 import { CREATE_MIDWIFE } from '../queries/midwife';
 
 const MidwifeForm: React.FC = () => {
-
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [createMidwife] = useMutation(CREATE_MIDWIFE);
