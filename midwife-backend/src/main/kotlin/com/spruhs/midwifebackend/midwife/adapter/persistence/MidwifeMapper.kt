@@ -5,13 +5,11 @@ import com.spruhs.midwifebackend.area.domain.Postcode
 import com.spruhs.midwifebackend.midwife.domain.Midwife
 import org.neo4j.driver.internal.InternalNode
 import org.springframework.data.neo4j.core.Neo4jClient
-import org.springframework.data.neo4j.core.Neo4jTemplate
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class MidwifeMapper(
-    val neo4jTemplate: Neo4jTemplate,
     val neo4jClient: Neo4jClient,
 ) {
 

@@ -1,5 +1,7 @@
 package com.spruhs.midwifebackend.area.adapter.persistence
 
+import com.spruhs.midwifebackend.area.domain.Area
+import com.spruhs.midwifebackend.area.domain.Postcode
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -8,12 +10,20 @@ import org.neo4j.harness.Neo4j
 import org.neo4j.harness.Neo4jBuilders
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
 import org.springframework.data.neo4j.core.Neo4jClient
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 
 
-@DataNeo4jTest
+
+@DataNeo4jTest(includeFilters = [ComponentScan.Filter(classes = [
+    AreaPersistenceAdapter::class,
+    AreaMapper::class,
+    Neo4jAreaRepository::class], type = FilterType.ASSIGNABLE_TYPE)])
 class AreaPersistenceAdapterTest {
 
     @Autowired
@@ -46,17 +56,31 @@ class AreaPersistenceAdapterTest {
     }
 
     @Test
-    fun findSomethingShouldWork(@Autowired client: Neo4jClient) {
-        val result = client.query("MATCH (n) RETURN COUNT(n)")
-            .fetchAs(Long::class.java)
-            .one()
-        assertThat(result).hasValue(0L)
+    fun `should return all areas`(@Autowired client: Neo4jClient) {
+        //Given
+        val area1 = Area(Postcode(50733), "Nippes", "Köln")
+        val area2 = Area(Postcode(50674), "Innenstadt", "Köln")
+
+        areaPersistenceAdapter.save(area1)
+        areaPersistenceAdapter.save(area2)
+
+        //When
+        val areas = areaPersistenceAdapter.findAll()
+
+        //Then
+        assertThat(areas).isEqualTo(setOf(area1, area2))
     }
 
     @Test
-    fun `should return all areas`(@Autowired client: Neo4jClient) {
-        val areas = areaPersistenceAdapter.findAll()
-        assertThat(areas).isEmpty()
+    fun `should save an area`(@Autowired client: Neo4jClient) {
+        //Given
+        val area = Area(Postcode(50733), "Nippes", "Köln")
+
+        //When
+        val savedArea = areaPersistenceAdapter.save(area)
+
+        //Then
+        assertThat(savedArea).isEqualTo(area)
     }
 
 }

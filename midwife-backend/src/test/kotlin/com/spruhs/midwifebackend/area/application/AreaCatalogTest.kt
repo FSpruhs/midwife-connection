@@ -13,12 +13,16 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.context.ApplicationEventPublisher
 
 @ExtendWith(MockKExtension::class)
 class AreaCatalogTest {
 
     @MockK
     lateinit var repository: AreaRepository
+
+    @MockK
+    lateinit var eventPublisher: ApplicationEventPublisher
 
     @InjectMockKs
     lateinit var catalog: AreaCatalog
@@ -29,7 +33,7 @@ class AreaCatalogTest {
     }
 
     @Test
-    fun findAreaByPostcode_shouldFindInList() {
+    fun `find area by postcode should find in list`() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
         every { repository.save(any()) } returns  area
@@ -43,7 +47,7 @@ class AreaCatalogTest {
     }
 
     @Test
-    fun findAreaByPostcode_shouldFindInRepository() {
+    fun `find area by postcode should find in repository`() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
         every { repository.findByPostcode(Postcode(50674)) } returns area
@@ -56,7 +60,7 @@ class AreaCatalogTest {
     }
 
     @Test
-    fun findAreaByPostcode_shouldThrowException_whenNotFound() {
+    fun `find area by postcode should throw exception when not found`() {
         // Given
         every { repository.findByPostcode(Postcode(50674)) } returns null
 
@@ -68,7 +72,7 @@ class AreaCatalogTest {
     }
 
     @Test
-    fun addArea_shouldAddArea() {
+    fun `add area should add area`() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
         every { repository.save(any()) } returns  area
@@ -82,7 +86,7 @@ class AreaCatalogTest {
     }
 
     @Test
-    fun addArea_shouldThrowException_whenAreaAlreadyExists() {
+    fun `add area should throw exception when area already exists`() {
         // Given
         val area = Area(Postcode(50674), "Innenstadt", "Köln")
         every { repository.save(any()) } returns  area
@@ -96,7 +100,7 @@ class AreaCatalogTest {
     }
 
     @Test
-    fun addAllAreas_shouldAddAllAreas() {
+    fun `add all areas should add all areas`() {
         // Given
         val areas = setOf(
             Area(Postcode(50674), "Innenstadt", "Köln"),
