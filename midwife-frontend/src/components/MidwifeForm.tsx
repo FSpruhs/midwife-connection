@@ -22,8 +22,8 @@ const MidwifeForm: React.FC = () => {
       variables: {
         firstName: firstName,
         lastName: lastName,
-        areas: []
-       }
+        areas: [],
+      },
     }).then((data) => console.log(data));
   };
 

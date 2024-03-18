@@ -6,7 +6,6 @@ import { CREATE_AREA, DELETE_AREA, GET_AREAS } from '../queries/area.ts';
 import { useNavigate } from 'react-router-dom';
 
 export default function AreaComponent() {
-
   const { data, refetch } = useQuery<AreaListGraphQlData>(GET_AREAS);
 
   const [deleteArea] = useMutation(DELETE_AREA);
@@ -37,14 +36,8 @@ export default function AreaComponent() {
 
   return (
     <>
-      <AreaList
-        areaData={data}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      />
-      <AreaForm
-        invokeSubmit={handleSubmit}
-      />
+      <AreaList areaData={data} handleDelete={handleDelete} handleEdit={handleEdit} />
+      <AreaForm invokeSubmit={handleSubmit} />
     </>
   );
 }
