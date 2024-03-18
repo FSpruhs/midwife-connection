@@ -10,3 +10,14 @@ export const CREATE_MIDWIFE = gql`
     }
   }
 `;
+
+export const GET_MIDWIFES = gql`
+  query GetMidwifes {
+    getMidwifes {
+      id
+      firstName
+      lastName
+      areas
+    }
+  }
+`;

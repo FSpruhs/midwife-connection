@@ -2,6 +2,7 @@ import { Button, Checkbox, FormControlLabel, Stack, TextField } from '@mui/mater
 import { useForm } from 'react-hook-form';
 import { AreaListGraphQlData } from '../../models/area.ts';
 import { useEffect, useState } from 'react';
+import { Midwife } from '../../models/midwife.ts';
 
 interface Props {
   invokeSubmit: (data: Midwife) => void;

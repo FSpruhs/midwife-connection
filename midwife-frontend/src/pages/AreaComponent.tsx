@@ -36,7 +36,7 @@ export default function AreaComponent() {
 
   return (
     <>
-      <AreaList areaData={data} handleDelete={handleDelete} handleEdit={handleEdit} />
+      <AreaList areaData={data?.getAreas} handleDelete={handleDelete} handleEdit={handleEdit} />
       <AreaForm invokeSubmit={handleSubmit} />
     </>
   );

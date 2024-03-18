@@ -4,18 +4,36 @@ import { Area } from '../../models/area.ts';
 
 interface Props {
   invokeSubmit: (data: Area) => void;
+  postcodeDisabled?: boolean;
+  defaultArea?: Area;
+  submitButtonText?: string;
 }
 
-export default function AreaForm(props: Readonly<Props>) {
+export default function AreaForm({
+  invokeSubmit,
+  postcodeDisabled = false,
+  submitButtonText = 'Anlegen',
+  defaultArea = {
+    city: '',
+    district: '',
+    postcode: 0,
+  },
+}: Readonly<Props>) {
   const {
     reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Area>();
+  } = useForm<Area>({
+    defaultValues: {
+      city: defaultArea.city,
+      district: defaultArea.district,
+      postcode: defaultArea.postcode,
+    },
+  });
 
   const onSubmit = (data: Area) => {
-    props.invokeSubmit(data);
+    invokeSubmit(data);
     reset();
   };
 
@@ -48,9 +66,10 @@ export default function AreaForm(props: Readonly<Props>) {
           margin={'normal'}
           error={!!errors.postcode}
           helperText={errors.postcode ? 'Fünfstellige Postleitzahl erforderlich' : ''}
+          disabled={postcodeDisabled}
         />
       </Stack>
-      <Button type="submit">Anlegen</Button>
+      <Button type="submit">{submitButtonText}</Button>
     </form>
   );
 }

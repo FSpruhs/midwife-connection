@@ -2,10 +2,10 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Area, AreaListGraphQlData } from '../../models/area.ts';
+import { Area } from '../../models/area.ts';
 
 interface Props {
-  areaData: AreaListGraphQlData | undefined;
+  areaData: Area[] | undefined;
   handleDelete: (area: Area) => void;
   handleEdit: (area: Area) => void;
 }
@@ -13,7 +13,7 @@ interface Props {
 export default function AreaList(props: Readonly<Props>) {
   return (
     <TableContainer component={Paper}>
-      {props.areaData?.getAreas == undefined ? (
+      {props.areaData == undefined ? (
         <p>Loading...</p>
       ) : (
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="sticky table">
@@ -32,7 +32,7 @@ export default function AreaList(props: Readonly<Props>) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.areaData.getAreas.map((area) => (
+            {props.areaData.map((area) => (
               <TableRow key={area.postcode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell align="left">{area.postcode}</TableCell>
                 <TableCell align="left">{area.district}</TableCell>
