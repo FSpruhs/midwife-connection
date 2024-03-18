@@ -2,7 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Area, AreaListGraphQlData } from '../models/area.ts';
+import { Area, AreaListGraphQlData } from '../../models/area.ts';
 
 interface Props {
   areaData: AreaListGraphQlData | undefined;

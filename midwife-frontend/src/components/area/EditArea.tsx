@@ -1,22 +1,45 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { GET_AREAS, UPDATE_AREA } from '../../queries/area.ts';
 import { Button, Stack, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Area } from '../models/area.ts';
 
-interface Props {
-  invokeSubmit: (data: Area) => void;
-}
+type Inputs = {
+  city: string;
+  district: string;
+  postcode: string;
+};
 
-export default function AreaForm(props: Readonly<Props>) {
+export default function EditArea() {
+  const routeParams = useParams();
+  const [updateArea] = useMutation(UPDATE_AREA, {
+    refetchQueries: [{ query: GET_AREAS }],
+  });
+  const navigate = useNavigate();
+
   const {
     reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Area>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      city: routeParams.city,
+      district: routeParams.district,
+      postcode: routeParams.postcode,
+    },
+  });
 
-  const onSubmit = (data: Area) => {
-    props.invokeSubmit(data);
+  const onSubmit = (data: Inputs) => {
+    updateArea({
+      variables: {
+        postcode: data.postcode,
+        district: data.district,
+        city: data.city,
+      },
+    }).then((data) => console.log(data));
     reset();
+    navigate('/area');
   };
 
   return (
@@ -44,13 +67,14 @@ export default function AreaForm(props: Readonly<Props>) {
           {...register('postcode', { min: 10000, max: 99999, required: true })}
           label={'Postleitzahl'}
           variant={'outlined'}
-          type={'number'}
+          type={'text'}
           margin={'normal'}
           error={!!errors.postcode}
           helperText={errors.postcode ? 'Fünfstellige Postleitzahl erforderlich' : ''}
+          disabled
         />
       </Stack>
-      <Button type="submit">Anlegen</Button>
+      <Button type="submit">Bearbeiten</Button>
     </form>
   );
 }

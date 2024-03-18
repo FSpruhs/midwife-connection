@@ -1,4 +1,4 @@
-import MidwifeForm from '../components/MidwifeForm.tsx';
+import MidwifeForm from '../components/midwife/MidwifeForm.tsx';
 import { render } from '@testing-library/react';
 
 describe('MidwifeForm', () => {

@@ -32,7 +32,7 @@ class MidwifePersistenceAdapter(
     }
 
     override fun findByArea(postcode: Postcode): List<Midwife> {
-        return neo4jClient.query("MATCH (m:MidwifeNode)-[:SERVES]->(a:AreaNode {postcode: $0}) RETURN m")
+        return neo4jClient.query("MATCH (m:MidwifeNode)-[:WORKS_IN]->(a:AreaNode {postcode: $0}) RETURN m")
             .bind(postcode.value).to("0")
             .fetchAs(MidwifeNode::class.java)
             .all()

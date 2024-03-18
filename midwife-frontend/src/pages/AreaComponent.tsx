@@ -1,5 +1,5 @@
-import AreaForm from '../components/AreaForm.tsx';
-import AreaList from '../components/AreaList.tsx';
+import AreaForm from '../components/area/AreaForm.tsx';
+import AreaList from '../components/area/AreaList.tsx';
 import { useMutation, useQuery } from '@apollo/client';
 import { Area, AreaListGraphQlData } from '../models/area.ts';
 import { CREATE_AREA, DELETE_AREA, GET_AREAS } from '../queries/area.ts';
