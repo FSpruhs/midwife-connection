@@ -1,6 +1,6 @@
 import MidwifeForm from '../components/midwife/MidwifeForm.tsx';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_MIDWIFE, GET_MIDWIFES } from '../queries/midwife.ts';
+import { CREATE_MIDWIFE, DELETE_MIDWIFE, GET_MIDWIFES } from '../queries/midwife.ts';
 import { AreaListGraphQlData } from '../models/area.ts';
 import { GET_AREAS } from '../queries/area.ts';
 import MidwifeList from '../components/midwife/MidwifeList.tsx';
@@ -10,6 +10,7 @@ export default function MidwifeComponent() {
   const { data: areaData } = useQuery<AreaListGraphQlData>(GET_AREAS);
   const { data: midwifeData, refetch } = useQuery<MidwifeListGraphQlData>(GET_MIDWIFES);
   const [createMidwife] = useMutation(CREATE_MIDWIFE);
+  const [deleteMidwife] = useMutation(DELETE_MIDWIFE);
 
   const handleSubmit = (data: Midwife) => {
     createMidwife({
@@ -21,9 +22,21 @@ export default function MidwifeComponent() {
     }).then(() => refetch());
   };
 
+  const handleDelete = (midwife: Midwife) => {
+    deleteMidwife({
+      variables: {
+        id: midwife.id,
+      },
+    }).then(() => refetch());
+  };
+
+  const handleEdit = (midwife: Midwife) => {
+    console.log(midwife);
+  };
+
   return (
     <>
-      <MidwifeList midwifeData={midwifeData?.getMidwifes} />
+      <MidwifeList midwifeData={midwifeData?.getMidwifes} handleDelete={handleDelete} handleEdit={handleEdit}/>
       <MidwifeForm invokeSubmit={handleSubmit} areas={areaData} />
     </>
   );

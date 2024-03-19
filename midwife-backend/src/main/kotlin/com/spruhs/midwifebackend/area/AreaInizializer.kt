@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class AreaInizializer(
-    val repository: AreaRepository,
-    val catalog: AreaCatalog
+    private val repository: AreaRepository,
+    private val catalog: AreaCatalog
 ) : ApplicationRunner{
     override fun run(args: ApplicationArguments?) {
         if (repository.findAll().isEmpty()) fillWithDefaultAreas() else catalog.loadAreas()

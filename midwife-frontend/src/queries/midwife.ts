@@ -11,6 +11,12 @@ export const CREATE_MIDWIFE = gql`
   }
 `;
 
+export const DELETE_MIDWIFE = gql`
+    mutation DeleteMidwife($id: ID!) {
+        deleteMidwife(id: $id)
+    }
+`;
+
 export const GET_MIDWIFES = gql`
   query GetMidwifes {
     getMidwifes {

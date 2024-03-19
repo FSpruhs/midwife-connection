@@ -10,7 +10,7 @@ import java.util.*
 
 @Component
 class MidwifeMapper(
-    val neo4jClient: Neo4jClient,
+    private val neo4jClient: Neo4jClient,
 ) {
 
     fun findAreasByIds(areaIds: List<Int>): List<AreaNode> {

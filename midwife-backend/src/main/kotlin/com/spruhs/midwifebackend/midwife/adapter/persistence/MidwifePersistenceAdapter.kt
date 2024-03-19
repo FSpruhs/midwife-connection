@@ -1,7 +1,7 @@
 package com.spruhs.midwifebackend.midwife.adapter.persistence
 
 import com.spruhs.midwifebackend.area.domain.Postcode
-import com.spruhs.midwifebackend.midwife.application.ports.MidwifeRepository
+import com.spruhs.midwifebackend.midwife.application.MidwifeRepository
 import com.spruhs.midwifebackend.midwife.domain.Midwife
 import org.springframework.data.neo4j.core.Neo4jClient
 import org.springframework.stereotype.Component
@@ -38,5 +38,9 @@ class MidwifePersistenceAdapter(
             .all()
             .map { midwifeNode -> mapper.toDomain(midwifeNode) }
             .toList()
+    }
+
+    override fun deleteById(id: UUID) {
+        repository.deleteById(id.toString())
     }
 }

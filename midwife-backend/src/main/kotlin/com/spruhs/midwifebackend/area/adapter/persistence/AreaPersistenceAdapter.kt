@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class AreaPersistenceAdapter(
-    val repository: Neo4jAreaRepository,
-    val mapper: AreaMapper
+    private val repository: Neo4jAreaRepository,
+    private val mapper: AreaMapper
 ) : AreaRepository {
     override fun saveAll(areas: Set<Area>) {
         repository.saveAll(areas.map { mapper.fromDomain(it) })

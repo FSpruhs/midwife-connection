@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class AreaCatalog(
-    val repository: AreaRepository,
-    val eventPublisher: ApplicationEventPublisher
+    private val repository: AreaRepository,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
     private val areas = mutableSetOf<Area>()
 

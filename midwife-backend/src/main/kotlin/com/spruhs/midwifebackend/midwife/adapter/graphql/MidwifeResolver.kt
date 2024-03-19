@@ -1,10 +1,7 @@
 package com.spruhs.midwifebackend.midwife.adapter.graphql
 
 import com.spruhs.midwifebackend.area.domain.Postcode
-import com.spruhs.midwifebackend.midwife.application.RegisterMidwifeCommand
-import com.spruhs.midwifebackend.midwife.application.FindAllMidwifesUseCase
-import com.spruhs.midwifebackend.midwife.application.FindMidwifeByIdUseCase
-import com.spruhs.midwifebackend.midwife.application.RegisterMidwifeUseCase
+import com.spruhs.midwifebackend.midwife.application.*
 import com.spruhs.midwifebackend.midwife.domain.Midwife
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -14,9 +11,10 @@ import java.util.UUID
 
 @Controller
 class MidwifeResolver(
-    val findMidwifeByIdUseCase: FindMidwifeByIdUseCase,
-    val findAllMidwifesUseCase: FindAllMidwifesUseCase,
-    val registerMidwifeUseCase: RegisterMidwifeUseCase
+    private val findMidwifeByIdUseCase: FindMidwifeByIdUseCase,
+    private val findAllMidwifesUseCase: FindAllMidwifesUseCase,
+    private val registerMidwifeUseCase: RegisterMidwifeUseCase,
+    private val deleteMidwifeUseCase: DeleteMidwifeUseCase
 ) {
 
     @QueryMapping
@@ -41,6 +39,12 @@ class MidwifeResolver(
                 lastName = lastName,
                 areas = areas.map { Postcode(it) }.toSet()
             )).let(::toDto)
+    }
+
+    @MutationMapping
+    fun deleteMidwife(@Argument id: UUID): Boolean {
+        deleteMidwifeUseCase.delete(id)
+        return true
     }
 }
 
