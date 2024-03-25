@@ -14,13 +14,14 @@ function App() {
     <>
       <StandardAppBar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/midwife" element={<MidwifeComponent />} />
-        <Route path="/area" element={<AreaComponent />} />
-        <Route path="/brokerage" element={<Brokerage />} />
-        <Route path="/women" element={<Women />} />
-        <Route path="/service" element={<Service />} />
-        <Route path="/area/:postcode/:city/:district" element={<EditArea />} />
+        <Route index element={<Home />} />
+        <Route path="midwife" element={<MidwifeComponent />} />
+        <Route path="midwife/:id" element={<MidwifeComponent />} />
+        <Route path="area" element={<AreaComponent />} />
+        <Route path="area/:postcode/:city/:district" element={<EditArea />} />
+        <Route path="brokerage" element={<Brokerage />} />
+        <Route path="women" element={<Women />} />
+        <Route path="service" element={<Service />} />
       </Routes>
     </>
   );
